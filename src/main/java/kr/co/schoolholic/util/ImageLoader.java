@@ -1,7 +1,6 @@
 package kr.co.schoolholic.util;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import kr.co.schoolholic.core.Global;
+import kr.co.schoolholic.core.AppContext;
 
 /**
  * Created by kevin on 2015. 10. 21..
@@ -160,7 +159,7 @@ public class ImageLoader {
             if (bmp != null) {
                 Drawable[] drawables = new Drawable[2];
                 drawables[0] = mStubDrawable;
-                drawables[1] = new BitmapDrawable(Global.instance.getApplicationContext().getResources(), bmp);
+                drawables[1] = new BitmapDrawable(AppContext.instance.getApplicationContext().getResources(), bmp);
                 td = new TransitionDrawable(drawables);
                 td.setCrossFadeEnabled(true); //important if you have transparent bitmaps
             }

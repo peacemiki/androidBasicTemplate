@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import kr.co.schoolholic.core.Global;
+import kr.co.schoolholic.core.AppContext;
 
 /**
  * Created by kevin on 15. 2. 11..
@@ -39,7 +39,7 @@ public enum TaskUtil implements Application.ActivityLifecycleCallbacks {
     public void onActivityResumed(Activity activity) {
         Trace.d("onActivityResumed. activity name = " + activity.getLocalClassName());
         isApplicationInForeground = true;
-        Global.instance.setTopActivityContext(activity);
+        AppContext.instance.setTopActivityContext(activity);
     }
 
     @Override

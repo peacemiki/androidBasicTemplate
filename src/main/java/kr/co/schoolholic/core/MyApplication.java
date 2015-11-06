@@ -13,7 +13,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Global.instance.setApplicationContext(getApplicationContext());
+        AppContext.instance.setApplicationContext(getApplicationContext());
 
         registerActivityLifecycleCallbacks(TaskUtil.instance);
     }
@@ -22,7 +22,7 @@ public class MyApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
 
-        Global.instance.setApplicationContext(null);
+        AppContext.instance.setApplicationContext(null);
     }
 
 }

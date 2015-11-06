@@ -5,17 +5,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+
+import kr.co.schoolholic.util.Trace;
+
 /**
  * Created by Kevin on 2015. 2. 12..
- * Global instance offer the constant variables while application cycle.
+ * AppContext instance offer the constant variables while application cycle.
  */
-public enum Global {
+public enum AppContext {
     instance;
 
     private Context mApplicationContext;
     private Context mTopActivityContext;
     private DisplayMetrics mDisplayMetrics;
     private SQLiteDatabase mDB;
+
+    private HashMap<String, Object> mCache = new LinkedHashMap<>();
 
     public void setApplicationContext(Context context) {
         mApplicationContext = context;
@@ -54,5 +62,32 @@ public enum Global {
 
     public SQLiteDatabase getDB() {
         return mDB;
+    }
+
+    public Object addCacheObject(String key, Object object) {
+        if(mCache.containsKey(key)) {
+            Trace.w("The key(" + key + ") already used.");
+            return null;
+        }
+
+        return mCache.put(key, object);
+    }
+
+    public Object removeCacheObject(String key) {
+        if(mCache.containsKey(key) == false) {
+            Trace.w("The key isn't in cache.");
+            return null;
+        }
+
+        return mCache.remove(key);
+    }
+
+    public Object getCacheObject(String key) {
+        if(mCache.containsKey(key) == false) {
+            Trace.w("The key isn't in cache.");
+            return null;
+        }
+
+        return mCache.get(key);
     }
 }

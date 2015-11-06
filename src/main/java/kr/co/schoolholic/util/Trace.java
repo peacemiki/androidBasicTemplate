@@ -2,10 +2,10 @@ package kr.co.schoolholic.util;
 
 import android.util.Log;
 
-import kr.co.schoolholic.core.Global;
+import kr.co.schoolholic.core.AppContext;
 
 public class Trace {
-	private final static String TAG = Global.instance.getApplicationName();
+	private final static String TAG = AppContext.instance.getApplicationName();
 
     private enum Level {
         ERROR(0),

@@ -4,17 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import kr.co.schoolholic.core.Global;
+import kr.co.schoolholic.core.AppContext;
 
 public class Pref {
 	private static final String PREFS = "Preferences";
 	private static SharedPreferences getPreferences() {
-		Context context = Global.instance.getApplicationContext();
+		Context context = AppContext.instance.getApplicationContext();
 		return context.getSharedPreferences( PREFS, Context.MODE_PRIVATE);
 	}
 
 	private static Editor getEditor() {
-		Context context = Global.instance.getApplicationContext();
+		Context context = AppContext.instance.getApplicationContext();
 		return context.getSharedPreferences( PREFS, Context.MODE_PRIVATE ).edit();
 	}
 

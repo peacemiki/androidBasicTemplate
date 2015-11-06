@@ -8,21 +8,14 @@ import android.os.Build;
 
 import java.util.Date;
 
-import kr.co.schoolholic.BuildConfig;
+import kr.co.schoolholic.core.AppContext;
 
 
 public class AlarmUtil {
-	public static final String EXTRA_URI = "uri";
-	
-	public static boolean setAlarm( Context context, String action, long uri, long time, boolean isSet ) {
-		Intent intent = new Intent();
-		intent.setAction("kr.co.schoolholic.alarmreceiver");
-		intent.putExtra("action", action);
-		intent.putExtra(EXTRA_URI, uri);
-		
-		int requestId = makeUniqueIdUsingTime(time, uri) + 10000;
-		
-		PendingIntent sender = PendingIntent.getBroadcast(context, requestId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	public static void setAlarm( Intent intent, int identifier, long time, boolean isSet ) {
+        Context context = AppContext.instance.getApplicationContext();
+
+		PendingIntent sender = PendingIntent.getBroadcast(context, identifier, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
@@ -37,37 +30,9 @@ public class AlarmUtil {
 		} else {
         	am.cancel(sender);
 		}
-        
-		return true;
-    }
-	
-	public static boolean setRepeatAlarm( Context context, String action, long uri, long id, long alarmTime, long repeatInterval, boolean isSet ) {
-		Intent intent = new Intent();
-		intent.setAction("kr.co.schoolholic.alarmreceiver");
-		intent.putExtra("action", action);
-		intent.putExtra(EXTRA_URI, uri);
-		
-		int requestId = makeUniqueIdUsingTime(id, uri);
-		
-		PendingIntent sender = PendingIntent.getBroadcast(context, requestId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		
-		AlarmManager am = null;
-
-		if( isSet == true) {
-			Trace.d("setRepeatAlarm = " + new Date(alarmTime).toString());
-			am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-			am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, repeatInterval, sender);
-		} else {
-			am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-			am.cancel(sender);
-		}
-        
-		return true;
     }
 
-	
-	public static int makeUniqueIdUsingTime(long time, long uri) {
-		int requestId = (int) (time/ Integer.MAX_VALUE + time%(1000*100*100*100));
-		return requestId + (int)uri;
-	}
+//    public static void setRepeatAlarm( Intent intent, int identifier, long time, long interval, boolean isSet ) {
+//
+//    }
 }
